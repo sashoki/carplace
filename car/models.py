@@ -43,7 +43,7 @@ class Category(MPTTModel):
         db_table = 'category'
         verbose_name_plural = 'Categorys'
         verbose_name = 'Category'
-        ordering = ('tree_id', 'level')
+        ordering = ['-name']
 
     name = models.CharField(max_length=150, verbose_name='Category')
     parent = TreeForeignKey('self',  on_delete=models.CASCADE,  null=True, blank=True, related_name='children',
@@ -77,3 +77,17 @@ class Car(models.Model):
 
     def __str__(self):
         return self.owner
+
+    def addcategory(self, year, category):
+        for y in year:
+            if y < 1990:
+                category == 'Until 1990 release'
+            elif 1990 <= y < 2000:
+                category == 'From 1990 to 2000, the release'
+            elif 2000 <= y < 2010:
+                category == 'From 2000 to 2010 release'
+            elif y >= 2010:
+                category == 'After 2010 release'
+            else:
+                print 'No category'
+        return category

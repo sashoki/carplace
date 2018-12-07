@@ -1,9 +1,10 @@
 {% extends 'index.html' %}
 {% load staticfiles %}
+{% load i18n mptt_tags %}
 
-{% block cars %}
+{% block car_cat %}
 
-<h2>Car table:</h2>
+<h2> Category: {{ category }}</h2>
 <hr>
 <table id="car_table" class="display" border="2" align="center" style="width: 100%">
   <thead class="thead-default">
@@ -12,25 +13,20 @@
       <th align="center">Brand</th>
       <th align="center">Model</th>
       <th align="center">Year</th>
-      <th align="center">Category</th>
       <th align="center">Price in $</th>
-      <!--<th align="center">Owner</th>-->
     </tr>
   </thead>
   <tbody>
-  {% for c in cars %}
+  {% for c in category_cars %}
     <tr>
       <td align="center">{{c.id}}</td>
       <td align="center">{{c.brand}}</td>
       <td align="center">{{c.pattern}}</td>
       <td align="center">{{c.year}}</td>
-      <td align="center">{{c.category}}</td>
       <td align="center">{{c.price}}</td>
-      <!--<td align="center">{{c.owner}}</td>-->
     </tr>
   {% endfor %}
   </tbody>
 </table>
     <hr>
 {% endblock %}
-

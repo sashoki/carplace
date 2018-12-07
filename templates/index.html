@@ -1,5 +1,6 @@
 {% load staticfiles %}
-{% load static %}
+{% load mptt_tags %}
+{% load i18n mptt_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,11 +29,33 @@
       <div class="row">
 
         <div class="col-lg-12">
-          <div class="col-lg-1"></div>
-          <div class="col-lg-10">
-            {% block cars %}{% endblock %}
+          <div class="col-lg-3">
+          <h2 class="my-4">Cars categorys:</h2>
+          <hr>
+          <div class="list-group">
+            <ul class="project-root">
+                {% recursetree projects %}
+                <li>
+                    <a href="/category/get/{{ node.id }}/" title="{% blocktrans with project=node %} Show all entries in {{ project }}{% endblocktrans %}">{{ node }}</a>
+                    {% if not node.is_leaf_node %}
+                    <ul class="project-children project-{{ node.slug }}">
+                    {{ children }}
+                    </ul>
+                    {% endif %}
+                </li>
+                {% endrecursetree %}
+                {% if not projects %}
+                    <li>
+                        {% trans "Not projects yet." %}
+                    </li>
+                {% endif %}
+            </ul>
           </div>
-          <div class="col-lg-1"></div>
+          </div>
+          <div class="col-lg-9">
+            {% block cars %}{% endblock %}
+            {% block car_cat %}{% endblock %}
+          </div>
         </div>
         <!-- /.col-lg-9 -->
 
@@ -50,7 +73,23 @@
       <!-- /.container -->
     </footer>
 
-    {% block js%}{% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sl-1.2.6/datatables.min.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/af-2.3.2/b-1.5.4/b-colvis-1.5.4/b-flash-1.5.4/b-html5-1.5.4/b-print-1.5.4/cr-1.5.0/fc-3.2.5/kt-2.5.0/r-2.2.2/rg-1.1.0/rr-1.2.4/sl-1.2.6/datatables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        $('#car_table').DataTable({
+            dom:'B<"clear">lfrtip',
+            buttons: {
+                name:'primary',
+                buttons: ['copy', 'csv', 'excel', 'pdf']
+            }}
+        );
+    });
+    </script>
 
   </body>
 
