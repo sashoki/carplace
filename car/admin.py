@@ -17,7 +17,7 @@ class PatternAdmin(admin.ModelAdmin):
 
 class CarAdmin(admin.ModelAdmin):
     fields = ['brand', 'pattern', 'year', 'price', 'owner']
-    list_display = ('brand', 'pattern', 'year', 'price', 'owner',)
+    list_display = ('id', 'brand', 'pattern', 'year', 'price', 'owner',)
 
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Pattern, PatternAdmin)
