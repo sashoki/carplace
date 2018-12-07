@@ -1,5 +1,7 @@
 Django==1.9.9
 django-datatables-view==1.17.0
+django-js-asset==1.1.0
+django-mptt==0.9.1
 pkg-resources==0.0.0
 psycopg2==2.7.6.1
 psycopg2-binary==2.7.6.1
